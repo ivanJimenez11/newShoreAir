@@ -27,3 +27,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 # newShoreAir
 newShoreAir project, created by Ivan Jimenez
+
+!Importante para utilizar el proyecto: 1- Debes ingresar el origin (este debe ser 3 caracteres) y asi mismo ingresar el destination. Importante que al momento de ingresar estos, sepas alguna combinacion de la api para que te pueda calcular una ruta, si no sabes ninguna aqui te dejo 2 ejemplo: origin: MZL - CTG - Destination: BNC - BOG.
+Para el cambio de moneda darle en el select de change currency y seleccionar la moneda deseada y el boton de clear es para limpiar y crear una nueva ruta.
