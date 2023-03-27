@@ -1,0 +1,99 @@
+.contentRow1{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    .row1Content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 45px;
+        label{
+            color: white;
+            font-size: xx-large;
+            font-weight: bold;
+        }
+    }
+    .row2Content{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+        button{
+            background: purple;
+        }
+    }
+}
+
+.row3ContentJourney{
+    padding: 20px;
+    label{
+        font-weight: 500;
+    }
+    .cardJourney{
+        border: 1px solid purple;
+        border-radius: 5px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        .cardRoute{
+            cursor: pointer
+        }
+        span{
+            color: purple;
+            font-weight: 600;
+        }
+        .title{
+            font-size: 25px;
+            color: black;
+            font-weight: 600;
+        }
+        .dataJourney{
+            display: flex;
+            flex-direction: column;
+            .subTitle{
+                color: black;
+                font-size: 18px;
+            }
+            .rowDataJourney{
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                color: black;
+            }
+        }
+    }
+}
+
+.cardRoute:hover{
+    background: rgba(128, 0, 128, 0.466);
+}
+
+.width50{
+    width: 50%;
+    min-width: 405px;
+}
+
+.bg-w{
+    background: white;
+}
+
+.select{
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 5px 10px;
+    width: auto;
+}
+
+::ng-deep .mat-select-value{
+    color: black;
+}
+
+::ng-deep .mat-select-arrow{
+    color: black;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex{
+    color: white;
+}

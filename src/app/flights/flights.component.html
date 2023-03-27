@@ -1,0 +1,84 @@
+
+<div class="contentRow1">
+    <form [formGroup]="formAir">
+        <div class="row1Content">
+            <label>Search Flights</label>
+        </div>
+
+        <div class="row2Content"> 
+            <mat-form-field appearance="outline" class="width100"  style="height: 60px;">
+                <mat-label>Origin</mat-label>
+                <input matInput placeholder="" required formControlName="origin"  (input)="upperCaseText('origin')" maxlength="3" minlength="3" autocomplete="off" style="height: 22px;">
+               
+                <mat-error *ngIf="formAir.get('origin')?.hasError('required')">
+                    Ingrese su origen de salida.
+                </mat-error>
+                <mat-error *ngIf="formAir.get('origin')?.hasError('minlength')">
+                    Es necesario que el origen contenga al menos 3 caracteres.
+                </mat-error>
+                <mat-error *ngIf="formAir.get('origin')?.hasError('noIguales')">
+                    Los campos no pueden tener el mismo valor.
+                </mat-error>
+            </mat-form-field>
+        
+        
+            <mat-form-field appearance="outline" class="width100" style="height: 60px;">
+                <mat-label>Destination</mat-label>
+                <input matInput placeholder="" required formControlName="destination" (input)="upperCaseText('destination')" minlength="3" maxlength="3" autocomplete="off" style="height: 22px;">
+                <mat-error *ngIf="formAir.get('destination')?.hasError('required')">
+                    Ingrese su origen de salida.
+                </mat-error>
+                <mat-error *ngIf="formAir.get('destination')?.hasError('minLength')">
+                    Es necesario que el detino contenga al menos 3 caracteres.
+                </mat-error>
+                <mat-error *ngIf="formAir.get('destination')?.hasError('noIguales')">
+                    Los campos no pueden tener el mismo valor.
+                </mat-error>
+            </mat-form-field>
+        
+            <button mat-raised-button (click)="submit()">Search</button>
+        </div>
+    </form>
+
+        <div class="row3ContentJourney" *ngIf="journey">
+            <div class="cardJourney bg-w">
+                <div class="title">
+                    Journey
+                </div>
+                <div class="dataJourney">
+                    <label class="subTitle">Journey Data</label>
+                    <div class="rowDataJourney">  
+                        <label>Origin: <span>{{journey.origin}}</span></label> 
+                        <label>Destination: <span>{{journey.destination}}</span></label> 
+                        <label>price: <span>{{journey.price | currency: selectCurrency:'symbol'}}</span></label> 
+                        
+                        <label>Select Currency: </label>
+                        <mat-select class="select" [(ngModel)]="selectCurrency" (selectionChange)="selectCurrencyM($event)" appearance="outline">
+                            <mat-option value="USD">Dólar estadounidense</mat-option>
+                            <mat-option value="EUR">Euro</mat-option>
+                            <mat-option value="MXN">Peso mexicano</mat-option>
+                            <mat-option value="COP">Peso Colombiano</mat-option>
+                        </mat-select>
+
+                        <button mat-raised-button (click)="clear()">Clear</button>
+                    </div>
+                </div>
+                <div class="cardJourney width50 cardRoute" *ngFor="let fligth of journey.flight; let index = index">
+                    <div class="title">
+                        <label *ngIf="index == 0">Ida</label>
+                        <label *ngIf="index == 1">Venida</label>
+                    </div>
+                    <div class="dataJourney">
+                        <div class="rowDataJourney">  
+                            <label>Origin: <span>{{fligth.origin}}</span></label> 
+                            <label>Destination: <span>{{fligth.destination}}</span></label> 
+                            <label>price: <span>{{fligth.price | currency: selectCurrency:'symbol'}}</span></label> 
+                            <label>FlightCarrier: <span>{{fligth.transport?.flightCarrier}}</span></label> 
+                            <label>FlightNumber: <span>{{fligth.transport?.flightNumber}}</span></label> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
