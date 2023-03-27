@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { flight } from '../models/flight';
@@ -36,8 +37,10 @@ export class FlightsComponent implements OnInit {
   journey?: journey | null;
   searchFligth?: flight | null;
   selectCurrency: string
+  amountUSD?: number;
+  showLoadingCurrency: boolean = false;
 
-  constructor(private service: serviceFlights) {
+  constructor(private service: serviceFlights, private http: HttpClient) {
     this.selectCurrency = "USD"
     this.formAir.controls['origin'].valueChanges.subscribe(value => {
       this.validarIgualdad();
@@ -143,7 +146,63 @@ export class FlightsComponent implements OnInit {
   }
 
   selectCurrencyM(e: any){
-    this.selectCurrency = e.value;
+    if(e.value){
+        this.convertCurrency(this.journey?.price!, e.value);
+        // for (let index = 0; index < this.journey?.flight.length!; index++) {
+        //   this.convertCurrency(this.journey?.flight[index].price!, e.value, index, "F"); 
+        // }
+      // this.journey?.price = this.journey?.price
+    } else {
+      this.selectCurrency = e.value;
+    }
+  }
+
+  convertCurrency(amount: number, tocurrency: string) {
+    const apiKey = 'FhZUDsGClNqWr59NElGoaXH29qj0PXRc';
+    const apiEndpoint = 'https://api.apilayer.com/currency_data/live';
+    const fromCurrency = 'USD';
+    const toCurrency = tocurrency;
+
+    if (!this.amountUSD) {
+      this.amountUSD = amount;
+    }
+  
+    const headers = {
+      'apikey': apiKey
+    };
+  
+    const params = {
+      'base': fromCurrency,
+      'symbols': toCurrency
+    };
+    this.showLoadingCurrency = true;
+    this.http.get(apiEndpoint, { headers: headers, params: params }).subscribe((response: any) => {
+      this.showLoadingCurrency = false;
+      const exchangeRate = response.quotes[`USD${toCurrency}`];
+      const convertedAmount = this.amountUSD! * exchangeRate;
+      
+      if(this.journey?.price !== undefined){
+          this.journey.price = convertedAmount;
+      }
+
+      if (this.journey?.flight !== undefined) {
+          for (let i = 0; i < this.journey.flight.length; i++) {
+          const otherPrice = this.journey.flight[i];
+          const otherConvertedAmount = otherPrice.price! * exchangeRate;
+          otherPrice.price = otherConvertedAmount;
+          }
+      }
+         
+        // else if(type == "F") {
+        //   if(index !== -1){
+        //     if(this.journey?.flight[index].price !== undefined){
+        //       this.journey.flight[index].price = convertedAmount;
+        //     }
+        //   }
+        // }
+      
+      // Usa el valor convertido aquí
+    });
   }
 
   clear(){
@@ -151,5 +210,13 @@ export class FlightsComponent implements OnInit {
     this.searchFligth = null;
     this.formAir.reset();
   }
+
+    showLoading(){
+      if(this.showLoadingCurrency){
+        return true
+      } else {
+        return false
+      }
+    }
 }
 

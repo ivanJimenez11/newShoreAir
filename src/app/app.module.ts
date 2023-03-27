@@ -17,10 +17,14 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingBarComponent } from './loading-bar/loading-bar.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
-    FlightsComponent
+    FlightsComponent,
+    LoadingBarComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,9 @@ import { HttpClientModule } from '@angular/common/http';
     TextFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

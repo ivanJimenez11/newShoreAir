@@ -3,6 +3,6 @@ import { flight } from "./flight";
 export interface journey{
     origin: string;
     destination: string;
-    price: number;
+    price: number | null;
     flight: flight[] | [];
 }
